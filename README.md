@@ -1,2 +1,17 @@
-# kiss-and-click
-📸 Kiss &amp; Click - A cute photo booth app for Mac with retro camera styling. Features one-click photo capture, built-in gallery, download/delete options &amp; adorable pink/blue interface. Perfect for capturing memories! Works on M1/M2/M3 &amp; Intel Macs. No internet required - all photos stay local. 🎀✨
+📸 Kiss & Click v1.0.0
+
+A cute photo booth app for Mac!
+
+🎀 Features:
+- One-click photo capture
+- Built-in photo gallery 
+- Download & delete photos
+- Adorable retro interface
+
+📥 Download:
+- M1/M2/M3 Macs: Kiss & Click-1.0.0-arm64.dmg
+- Intel Macs: Kiss & Click-1.0.0.dmg
+
+📱 Installation: Download → Open DMG → Drag to Applications → Right-click app → Open
+
+Perfect for capturing cute memories! 📷✨

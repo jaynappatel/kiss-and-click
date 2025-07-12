@@ -1,0 +1,402 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  position: relative;
+}
+
+#app-ui {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Camera overlay positioning */
+#camera-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allow clicks to pass through except for interactive elements */
+}
+
+/* Camera video positioned in the white square */
+#video {
+  position: absolute;
+  /* Adjusted values to fit exactly in the white viewfinder box */
+  top: 46%;
+  left: 48%;
+  transform: translate(-64%, -30%);
+  width: 184px; /* Smaller width to fit the viewfinder */
+  height: 250px; /* Smaller height to fit the viewfinder */
+  object-fit: cover;
+  border-radius: 10px;
+  background: #000;
+  pointer-events: auto;
+  transition: filter 0.3s ease;
+}
+
+/* Camera video positioned in the white square */
+#video {
+  position: absolute;
+  /* Adjusted values to fit exactly in the white viewfinder box */
+  top: 46%;
+  left: 48%;
+  transform: translate(-64%, -30%);
+  width: 184px; /* Smaller width to fit the viewfinder */
+  height: 250px; /* Smaller height to fit the viewfinder */
+  object-fit: cover;
+  border-radius: 10px;
+  background: #000;
+  pointer-events: auto;
+}
+
+/* Cute camera storage button */
+.storage-btn {
+  position: absolute;
+  right: 120px; /* Much closer to the camera */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 70px;
+  height: 70px;
+  border: none;
+  border-radius: 15px;
+  background: #f4c2c2;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(244, 194, 194, 0.4);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.storage-btn:hover {
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 8px 25px rgba(244, 194, 194, 0.6);
+  background: #f0b5b5;
+}
+
+.storage-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Camera icon design */
+.camera-icon {
+  position: relative;
+  width: 50px;
+  height: 35px;
+}
+
+.camera-body {
+  width: 100%;
+  height: 100%;
+  background: #f4c2c2;
+  border-radius: 8px;
+  position: relative;
+  border: 3px solid #fff;
+}
+
+.camera-body::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 8px;
+  background: #f4c2c2;
+  border-radius: 4px 4px 0 0;
+  border: 3px solid #fff;
+  border-bottom: none;
+}
+
+.camera-lens {
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lens-inner {
+  width: 12px;
+  height: 12px;
+  background: #f4c2c2;
+  border-radius: 50%;
+}
+
+.camera-flash {
+  position: absolute;
+  top: 25%;
+  right: 20%;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 0;
+  border-radius: 20px;
+  width: 85%;
+  max-width: 900px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  border-bottom: 1px solid #eee;
+  background: linear-gradient(135deg, #ff69b4 0%, #e6005c 100%);
+  color: white;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 32px;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255,255,255,0.2);
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: 30px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+#stored-photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.stored-photo {
+  width: 100%;
+  height: 140px;
+  border-radius: 12px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.stored-photo:hover {
+  transform: scale(1.05) rotate(1deg);
+  border-color: #ff69b4;
+  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+}
+
+#no-photos-message {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 18px;
+}
+
+#no-photos-message p {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Click Here button with PNG background and SVG text overlay */
+#snapBtn {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* Remove all previous styling */
+  background: none;
+  border: none;
+  padding: 0;
+  
+  /* Set dimensions - adjust these to match your PNG size */
+  width: 200px; /* Adjust to your PNG width */
+  height: 60px; /* Adjust to your PNG height */
+  
+  cursor: pointer;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  
+  /* Use your PNG as background */
+  background-image: url('assets/Rectangle1.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+  /* Make it a flex container to center the SVG text */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style for the SVG text overlay */
+#snapBtn .button-text {
+  width: 60%; /* Reduced from 80% to make text smaller */
+  height: auto;
+  max-width: 120px; /* Reduced from 150px to make text smaller */
+  pointer-events: none; /* Prevents the SVG from interfering with button clicks */
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); /* Optional: add shadow to text */
+}
+
+/* Hover effect */
+#snapBtn:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+/* Active/pressed state */
+#snapBtn:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+/* Status message */
+#status-message {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+#status-message.show {
+  opacity: 1;
+}
+
+#status-message.success {
+  background: rgba(212, 237, 218, 0.9);
+  color: #155724;
+}
+
+#status-message.error {
+  background: rgba(248, 215, 218, 0.9);
+  color: #721c24;
+}
+
+/* Photo gallery for thumbnails */
+#photo-gallery {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 400px;
+  pointer-events: auto;
+}
+
+.photo-thumbnail {
+  width: 60px;
+  height: 45px;
+  border-radius: 5px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.photo-thumbnail:hover {
+  transform: scale(1.1);
+}
+
+/* Flash effect */
+.flash-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 0.15s ease;
+}
+
+.flash-effect.active {
+  opacity: 0.8;
+}
+
+/* Loading state for camera */
+#video.loading {
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#video.loading::before {
+  content: 'Loading camera...';
+  color: #999;
+  font-size: 14px;
+}

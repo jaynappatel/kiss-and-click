@@ -1,0 +1,43 @@
+{
+  "name": "kiss-and-click",
+  "version": "1.0.0",
+  "description": "A cute photo booth app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build-mac": "electron-builder --mac",
+    "build-win": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.kissandclick.app",
+    "productName": "Kiss & Click",
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "category": "public.app-category.photography",
+      "icon": "assets/icon.icns",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ]
+    },
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "author": "Jayna Patel",
+  "license": "MIT"
+}

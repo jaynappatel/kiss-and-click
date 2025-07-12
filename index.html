@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Kiss & Click</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <img src="assets/frame1.png" id="app-ui" alt="App UI">
+  
+  <!-- Camera elements overlay -->
+  <div id="camera-overlay">
+    <!-- Camera feed goes in the white square -->
+    <video id="video" autoplay playsinline></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    
+    <!-- Click here button with PNG background and SVG text -->
+    <button id="snapBtn">
+      <img src="assets/CLICK ME.SVG" alt="Click Me" class="button-text">
+    </button>
+    
+    <!-- Storage button -->
+    <button id="storageBtn" class="storage-btn" title="View Past Photos">
+      <div class="camera-icon">
+        <div class="camera-body">
+          <div class="camera-lens">
+            <div class="lens-inner"></div>
+          </div>
+          <div class="camera-flash"></div>
+        </div>
+      </div>
+    </button>
+    
+    <!-- Status message -->
+    <div id="status-message"></div>
+    
+    <!-- Captured photos thumbnails -->
+    <div id="photo-gallery"></div>
+  </div>
+  
+  <!-- Storage modal -->
+  <div id="storage-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>📸 Your Photo Collection</h2>
+        <button class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="stored-photos-grid"></div>
+        <div id="no-photos-message" style="display: none;">
+          <p>No photos yet! Start taking some pictures! 📷✨</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
